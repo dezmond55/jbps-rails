@@ -19,10 +19,11 @@ set :log_level, :debug
 set :keep_releases, 5
 
 # Web Central SSH details
-set :user, "jbpscoma" # Replace with your actual cPanel username
-set :password, "#!0031Jbps0031!#" # Replace with your cPanel password (or use SSH key)
+# Web Central SSH details
+set :user, "jbpscoma"
 set :ssh_options, {
   forward_agent: false,
-  auth_methods: %w[password],
-  port: 22 # Default SSH port, adjust if different
+  auth_methods: %w[publickey],
+  keys: ["C:/Users/borbu/.ssh/id_rsa"],
+  port: 22
 }
