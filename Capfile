@@ -17,6 +17,21 @@ install_plugin Capistrano::SCM::Git
 
 # Include tasks from other gems included in your Gemfile
 require "capistrano/rails"
+# Explicitly disable capistrano-bundler to avoid bundle command
+# require "capistrano/bundler"
+
+# Disable Bundler tasks with custom no-op definitions
+namespace :bundler do
+  task :install do
+    # No-op to override default install task
+    puts "Skipping bundler:install as gems are pre-built in vendor/bundle"
+  end
+  task :config do
+    # No-op to override default config task
+    puts "Skipping bundler:config as gems are pre-built in vendor/bundle"
+  end
+end
+
 # For documentation on these, see for example:
 #
 #   https://github.com/capistrano/rvm

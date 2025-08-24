@@ -18,7 +18,13 @@ set :log_level, :debug
 # Default value for :keep_releases is 5
 set :keep_releases, 5
 
-# Web Central SSH details
+# Bundler settings to use pre-built gems and disable remote execution
+set :bundle_path, -> { shared_path.join("vendor/bundle") }
+set :bundle_flags, "--local --path #{shared_path}/vendor/bundle" # Use pre-built gems, no server-side bundle
+set :bundle_without, %w[development test] # Exclude dev/test gems
+set :bundle_binstubs, nil # Disable binstub generation
+set :bundle_install, false # Explicitly disable remote bundle install
+
 # Web Central SSH details
 set :user, "jbpscoma"
 set :ssh_options, {
