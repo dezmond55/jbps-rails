@@ -36,6 +36,9 @@ namespace :bundler do
   end
 end
 
+# Disable asset precompilation since server lacks Ruby/Bundler
+Rake::Task["deploy:assets:precompile"].clear if Rake::Task.task_defined?("deploy:assets:precompile")
+
 # For documentation on these, see for example:
 #
 #   https://github.com/capistrano/rvm
