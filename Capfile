@@ -20,6 +20,10 @@ require "capistrano/rails"
 # Explicitly disable capistrano-bundler to avoid bundle command
 # require "capistrano/bundler"
 
+# Clear any existing Bundler tasks to ensure our no-op definitions take precedence
+Rake::Task["bundler:install"].clear if Rake::Task.task_defined?("bundler:install")
+Rake::Task["bundler:config"].clear if Rake::Task.task_defined?("bundler:config")
+
 # Disable Bundler tasks with custom no-op definitions
 namespace :bundler do
   task :install do
