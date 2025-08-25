@@ -40,7 +40,7 @@ end
 Rake::Task["deploy:assets:precompile"].clear if Rake::Task.task_defined?("deploy:assets:precompile")
 Rake::Task["deploy:assets:backup_manifest"].clear if Rake::Task.task_defined?("deploy:assets:backup_manifest")
 
-# Override deploy:assets tasks with no-op to prevent execution
+# Override deploy:assets and deploy:migrate tasks with no-op to prevent execution
 namespace :deploy do
   namespace :assets do
     task :precompile do
@@ -49,6 +49,9 @@ namespace :deploy do
     task :backup_manifest do
       puts "Skipping deploy:assets:backup_manifest as assets are precompiled and included"
     end
+  end
+  task :migrate do
+    puts "Skipping deploy:migrate as database migrations are handled locally or not required on server"
   end
 end
 
