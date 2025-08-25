@@ -27,9 +27,11 @@ Rake::Task["bundler:config"].clear if Rake::Task.task_defined?("bundler:config")
 # Disable Bundler tasks with custom no-op definitions
 namespace :bundler do
   task :install do
+    # No-op to override default install task
     puts "Skipping bundler:install as gems are pre-built in vendor/bundle"
   end
   task :config do
+    # No-op to override default config task
     puts "Skipping bundler:config as gems are pre-built in vendor/bundle"
   end
 end
