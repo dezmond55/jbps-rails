@@ -36,9 +36,10 @@ namespace :bundler do
   end
 end
 
-# Explicitly disable asset precompilation and backup manifest since server lacks Ruby/Bundler
+# Explicitly disable asset precompilation, backup manifest, and migrate tasks since server lacks Ruby/Bundler
 Rake::Task["deploy:assets:precompile"].clear if Rake::Task.task_defined?("deploy:assets:precompile")
 Rake::Task["deploy:assets:backup_manifest"].clear if Rake::Task.task_defined?("deploy:assets:backup_manifest")
+Rake::Task["deploy:migrate"].clear if Rake::Task.task_defined?("deploy:migrate")
 
 # Override deploy:assets and deploy:migrate tasks with no-op to prevent execution
 namespace :deploy do
@@ -50,9 +51,11 @@ namespace :deploy do
       puts "Skipping deploy:assets:backup_manifest as assets are precompiled and included"
     end
   end
-  task :migrate do
-    puts "Skipping deploy:migrate as database migrations are handled locally or not required on server"
-  end
+end
+
+# Top-level no-op override for deploy:migrate
+task :migrate do
+  puts "Skipping deploy:migrate as database migrations are handled locally or not required on server"
 end
 
 # For documentation on these, see for example:
