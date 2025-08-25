@@ -17,6 +17,39 @@ install_plugin Capistrano::SCM::Git
 
 # Include tasks from other gems included in your Gemfile
 require "capistrano/rails"
+# Explicitly disable capistrano-bundler to avoid bundle command
+# require "capistrano/bundler"
+
+# Clear any existing Bundler tasks to ensure our no-op definitions take precedence
+Rake::Task["bundler:install"].clear if Rake::Task.task_defined?("bundler:install")
+Rake::Task["bundler:config"].clear if Rake::Task.task_defined?("bundler:config")
+
+# Disable Bundler tasks with custom no-op definitions
+namespace :bundler do
+  task :install do
+    puts "Skipping bundler:install as gems are pre-built in vendor/bundle"
+  end
+  task :config do
+    puts "Skipping bundler:config as gems are pre-built in vendor/bundle"
+  end
+end
+
+# Explicitly disable asset precompilation and backup manifest since server lacks Ruby/Bundler
+Rake::Task["deploy:assets:precompile"].clear if Rake::Task.task_defined?("deploy:assets:precompile")
+Rake::Task["deploy:assets:backup_manifest"].clear if Rake::Task.task_defined?("deploy:assets:backup_manifest")
+
+# Override deploy:assets tasks with no-op to prevent execution
+namespace :deploy do
+  namespace :assets do
+    task :precompile do
+      puts "Skipping deploy:assets:precompile as assets are precompiled locally and included"
+    end
+    task :backup_manifest do
+      puts "Skipping deploy:assets:backup_manifest as assets are precompiled and included"
+    end
+  end
+end
+
 # For documentation on these, see for example:
 #
 #   https://github.com/capistrano/rvm
