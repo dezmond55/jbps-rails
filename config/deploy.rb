@@ -40,7 +40,8 @@ namespace :deploy do
   task :copy_assets do
     on roles(:app) do
       execute :mkdir, "-p", shared_path.join("public/assets")
-      upload! "public/assets/", shared_path.join("public/assets"), recursive: true
+      # Copy contents of public/assets directly, avoiding nesting
+      upload! Dir.glob("public/assets/*"), shared_path.join("public/assets"), recursive: true
     end
   end
 
