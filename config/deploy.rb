@@ -50,8 +50,8 @@ namespace :deploy do
       execute :mkdir, "-p", shared_path.join("public/assets")
       if test("[ -d #{asset_source} ]")
         within release_path do
-          # Copy all items except the assets directory itself to avoid nesting
-          execute :find, "public/assets", "-maxdepth", "1", "-mindepth", "1", "!", "-name", "assets", "-exec", "cp", "-r", "{}", "#{shared_path.join('public/assets')}", "\\;"
+          # Explicitly copy all contents except the assets directory
+          execute :rsync, "-av", "--exclude=assets", "#{asset_source}/", shared_path.join("public/assets")
           puts "Copied assets from #{asset_source} to #{shared_path.join('public/assets')}"
         end
       else
