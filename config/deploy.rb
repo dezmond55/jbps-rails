@@ -50,8 +50,8 @@ namespace :deploy do
       execute :mkdir, "-p", shared_path.join("public/assets")
       if test("[ -d #{asset_source} ]")
         within release_path do
-          # Corrected find command with proper -exec syntax
-          execute :find, "public/assets", "-maxdepth", "1", "-mindepth", "1", "-exec", "cp", "-r", "{}", "#{shared_path.join('public/assets')}", "\\;"
+          # Copy all items except the assets directory itself to avoid nesting
+          execute :find, "public/assets", "-maxdepth", "1", "-mindepth", "1", "!", "-name", "assets", "-exec", "cp", "-r", "{}", "#{shared_path.join('public/assets')}", "\\;"
           puts "Copied assets from #{asset_source} to #{shared_path.join('public/assets')}"
         end
       else
