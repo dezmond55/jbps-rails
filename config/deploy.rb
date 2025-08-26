@@ -49,10 +49,12 @@ namespace :deploy do
       puts "Checking asset source: #{asset_source}"
       # Debug the source structure
       execute :ls, "-la", asset_source
+      # Clean up the destination directory before copying
+      execute :rm, "-rf", shared_path.join("public/assets/*")
       execute :mkdir, "-p", shared_path.join("public/assets")
       if test("[ -d #{asset_source} ]")
         within release_path do
-          # Use rsync with a more specific exclude pattern to avoid nested assets
+          # Use rsync to copy contents, excluding nested assets
           execute :rsync, "-av", "--exclude='*/assets'", "--exclude='assets'", "#{asset_source}/", shared_path.join("public/assets")
           puts "Copied assets from #{asset_source} to #{shared_path.join('public/assets')}"
         end
