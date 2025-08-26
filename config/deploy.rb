@@ -50,5 +50,17 @@ namespace :deploy do
       execute :mkdir, "-p", shared_path.join("public/assets")
       if test("[ -d #{asset_source} ]")
         within release_path do
-          # Corrected find command with -exec as a single string
-          execute :find, "public/assets", "-maxdepth", "1", "-mindepth", "1", "-exec", "cp", "-r", "{}", "#{shared_path.join
+          # Corrected find command with proper -exec syntax
+          execute :find, "public/assets", "-maxdepth", "1", "-mindepth", "1", "-exec", "cp", "-r", "{}", "#{shared_path.join('public/assets')}", "\\;"
+          puts "Copied assets from #{asset_source} to #{shared_path.join('public/assets')}"
+        end
+      else
+        puts "Warning: Source directory #{asset_source} does not exist in release. Skipping asset copy."
+      end
+      puts "Asset copy from release completed. Check for errors or skipped files in the log."
+    end
+  end
+
+  # Run copy_assets before symlinking
+  before "deploy:symlink:linked_dirs", "deploy:copy_assets"
+end
