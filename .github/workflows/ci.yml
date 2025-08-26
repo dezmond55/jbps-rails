@@ -18,6 +18,11 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+      - name: Ensure Unix shebang in bin/ scripts
+        run: |
+          for file in bin/*; do
+            sed -i '1s/^#!.*ruby\.exe/#!\/usr\/bin\/env ruby/' "$file"
+          done
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
 
@@ -36,7 +41,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Use a recent Node.js version
+          node-version: '18'
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
 
@@ -52,6 +57,11 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+      - name: Ensure Unix shebang in bin/ scripts
+        run: |
+          for file in bin/*; do
+            sed -i '1s/^#!.*ruby\.exe/#!\/usr\/bin\/env ruby/' "$file"
+          done
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
@@ -78,6 +88,11 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+      - name: Ensure Unix shebang in bin/ scripts
+        run: |
+          for file in bin/*; do
+            sed -i '1s/^#!.*ruby\.exe/#!\/usr\/bin\/env ruby/' "$file"
+          done
       - name: Wait for PostgreSQL
         run: while ! pg_isready -h localhost -p 5432 -U postgres; do sleep 1; done
       - name: Run tests
