@@ -40,6 +40,28 @@ namespace :deploy do
   desc "Copy precompiled assets to shared directory"
   task :copy_assets do
     on roles(:app) do
+      release_path = fetch(:release_path) # Explicitly fetch release_path
+      asset_source = File.join(release_path, "public/assets")
+      execute :mkdir, "-p", shared_path.join("public/assets")
+      if test("[ -d #{asset_source} ]")
+        within release_path do
+          execute :cp, "-r", "public/assets/.", shared_path.join("public/assets")
+        end
+      else
+        puts "Warning: Source directory #{asset_source} does not exist in release. Skipping asset copy."
+      end
+      puts "Asset copy from release completed. Check for errors or skipped files in the log."
+    end
+  end
+
+  # Run copy_assets before symlinking
+  before "deploy:symlink:linked_dirs", "deploy:copy_assets"
+end
+# Custom task to copy public/assets to shared directory
+namespace :deploy do
+  desc "Copy precompiled assets to shared directory"
+  task :copy_assets do
+    on roles(:app) do
       release_path = release_path # Use the current release path
       asset_source = File.join(release_path, "public/assets")
       execute :mkdir, "-p", shared_path.join("public/assets")
