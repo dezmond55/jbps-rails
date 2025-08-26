@@ -41,12 +41,16 @@ namespace :deploy do
   task :copy_assets do
     on roles(:app) do
       release_path = release_path # Use the current release path
+      asset_source = File.join(release_path, "public/assets")
       execute :mkdir, "-p", shared_path.join("public/assets")
-      # Copy assets from the release directory instead of local
-      within release_path do
-        execute :cp, "-r", "public/assets/.", shared_path.join("public/assets")
+      if test("[ -d #{asset_source} ]")
+        within release_path do
+          execute :cp, "-r", "public/assets/.", shared_path.join("public/assets")
+        end
+      else
+        puts "Warning: Source directory #{asset_source} does not exist in release. Skipping asset copy."
       end
-      puts "Asset copy from release completed. Check for errors in the log."
+      puts "Asset copy from release completed. Check for errors or skipped files in the log."
     end
   end
 
