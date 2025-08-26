@@ -45,5 +45,5 @@ namespace :deploy do
   end
 
   # Run copy_assets before symlinking
-  before :symlink:linked_dirs, :copy_assets
+  before "deploy:symlink:linked_dirs", "deploy:copy_assets"
 end
