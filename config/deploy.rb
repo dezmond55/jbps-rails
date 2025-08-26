@@ -40,20 +40,13 @@ namespace :deploy do
   desc "Copy precompiled assets to shared directory"
   task :copy_assets do
     on roles(:app) do
+      release_path = release_path # Use the current release path
       execute :mkdir, "-p", shared_path.join("public/assets")
-      assets = Dir.glob("public/assets/**/*").select { |f| File.file?(f) }
-      batch_size = 10 # Process files in batches to avoid overwhelming the connection
-      assets.each_slice(batch_size) do |batch|
-        begin
-          batch.each do |file|
-            relative_path = file.sub(/^public\/assets\//, "")
-            upload! file, shared_path.join("public/assets/#{relative_path}")
-          end
-        rescue SSHKit::Runner::ExecuteError, Errno::ECONNRESET => e
-          puts "Error during upload: #{e.message}. Retrying batch..."
-          retry # Retry the current batch on connection error
-        end
+      # Copy assets from the release directory instead of local
+      within release_path do
+        execute :cp, "-r", "public/assets/.", shared_path.join("public/assets")
       end
+      puts "Asset copy from release completed. Check for errors in the log."
     end
   end
 
