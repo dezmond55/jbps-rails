@@ -33,3 +33,17 @@ set :ssh_options, {
   keys: "C:/Users/borbu/.ssh/id_rsa",
   port: 22
 }
+
+# Custom task to copy public/assets to shared directory
+namespace :deploy do
+  desc "Copy precompiled assets to shared directory"
+  task :copy_assets do
+    on roles(:app) do
+      execute :mkdir, "-p", shared_path.join("public/assets")
+      upload! "public/assets/", shared_path.join("public/assets"), recursive: true
+    end
+  end
+
+  # Run copy_assets before symlinking
+  before :symlink:linked_dirs, :copy_assets
+end
