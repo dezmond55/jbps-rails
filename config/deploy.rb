@@ -6,8 +6,8 @@ set :repo_url, "https://github.com/dezmond55/jbps-rails.git"
 set :branch, "main"
 set :deploy_to, "/home/jbpscoma/public_html/nodeapp"
 set :pty, true
-set :linked_files, %w[config/database.yml config/master.key]
-set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system]
+set :linked_files, %w["config/database.yml" "config/master.key"]
+set :linked_dirs, %w[log "tmp/pids" "tmp/cache" "tmp/sockets" "vendor/bundle" "public/system"]
 
 # Default value for :format is :airbrussh
 set :format, :airbrussh
