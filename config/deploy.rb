@@ -50,8 +50,8 @@ namespace :deploy do
       execute :mkdir, "-p", shared_path.join("public/assets")
       if test("[ -d #{asset_source} ]")
         within release_path do
-          # Copy contents of public/assets directly, avoiding nesting
-          execute :cp, "-r", "public/assets/*", shared_path.join("public/assets")
+          # Copy files and subdirectories individually to avoid nesting
+          execute :find, "public/assets", "-maxdepth", "1", "-mindepth", "1", "-exec", "cp", "-r", "{}", shared_path.join("public/assets"), ";"
           puts "Copied assets from #{asset_source} to #{shared_path.join('public/assets')}"
         end
       else
