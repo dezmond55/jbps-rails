@@ -49,8 +49,13 @@ namespace :deploy do
       puts "Checking asset source: #{asset_source}"
       # Debug the source structure
       execute :ls, "-la", asset_source
-      # Clean up the destination directory before copying
-      execute :rm, "-rf", shared_path.join("public/assets/*")
+      # Attempt to clean up the destination with permission adjustment
+      begin
+        execute :chmod, "-R", "u+w", shared_path.join("public/assets")
+        execute :rm, "-rf", shared_path.join("public/assets/*")
+      rescue SSHKit::Command::Failed => e
+        puts "Warning: Cleanup failed due to permissions: #{e.message}. Proceeding with copy."
+      end
       execute :mkdir, "-p", shared_path.join("public/assets")
       if test("[ -d #{asset_source} ]")
         within release_path do
