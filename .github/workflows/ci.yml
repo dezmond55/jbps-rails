@@ -95,6 +95,11 @@ jobs:
           done
       - name: Wait for PostgreSQL
         run: while ! pg_isready -h localhost -p 5432 -U postgres; do sleep 1; done
+      - name: Create and migrate database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+        run: bin/rails db:create db:migrate
       - name: Run tests
         env:
           RAILS_ENV: test
