@@ -5,30 +5,35 @@
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
 # Ignore bundler config.
-/.bundle
+.bundle
 
 # Ignore all environment files.
-/.env*
+.env*
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+log/*
+tmp/*
 !/log/.keep
 !/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
-/tmp/pids/*
+tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
 
 # Ignore storage (uploaded files in development and any SQLite databases).
-/storage/*
+storage/*
 !/storage/.keep
-/tmp/storage/*
+tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
 
 /public/assets
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+config/master.key
+
+# Ignore vendor files (JavaScript and placeholders).
+vendor/javascript/
+vendor/.keep
+vendor/javascript/.keep
