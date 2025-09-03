@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "pages#home" # Sets the root path to the home action
   get "up" => "rails/health#show", as: :rails_health_check # Keep health check
+  get "/about" => "pages#about"
   get "/nodeapp", to: redirect("/") # Redirect legacy path to root
   # Optional PWA routes (uncomment if needed later)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
