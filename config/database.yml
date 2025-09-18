@@ -1,55 +1,19 @@
-# PostgreSQL. Versions 9.3 and up are supported.
-#
-# Install the pg driver:
-#   gem install pg
-# On macOS with Homebrew:
-#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
-# On Windows:
-#   gem install pg
-#       Choose the win32 build.
-#       Install PostgreSQL and put its /bin directory on your path.
-#
-# Configure Using Gemfile
-# gem "pg"
-#
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  # Heroku provides DATABASE_URL, which overrides these settings
-  url: <%= ENV["DATABASE_URL"] %>
+  username: postgres
+  password: Trek5200 # Password updated after forgetting it multiple times :) 
+  host: localhost
 
 development:
   <<: *default
-  database: jbps_rails_development
-  # Optional: Use a local DATABASE_URL for development if needed
-  # url: <%= ENV["DATABASE_URL"] %>
+  database: jbps_development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: jbps_rails_test
+  database: jbps_test
 
-# Production configuration for Heroku
 production:
-  primary:
-    <<: *default
-    # Heroku uses DATABASE_URL for the primary database
-    url: <%= ENV["DATABASE_URL"] %>
-  # Optional multi-database setup (requires Rails 6+ and Heroku Postgres add-ons)
-  # cache:
-  #   <<: *default
-  #   url: <%= ENV["CACHE_DATABASE_URL"] %>
-  #   migrations_paths: db/cache_migrate
-  # queue:
-  #   <<: *default
-  #   url: <%= ENV["QUEUE_DATABASE_URL"] %>
-  #   migrations_paths: db/queue_migrate
-  # cable:
-  #   <<: *default
-  #   url: <%= ENV["CABLE_DATABASE_URL"] %>
-  #   migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
