@@ -25,18 +25,20 @@ class ServicesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get update" do
+  test "should update service" do
     service = Service.create(name: "Test", description: "Test description")
     patch service_path(service), params: { service: { name: "Updated" } }
     assert_redirected_to services_path
     assert_equal "Updated", Service.find(service.id).name
+    assert_equal "Service updated successfully.", flash[:notice]
   end
 
-  test "should get destroy" do
+  test "should destroy service" do
     service = Service.create(name: "Test", description: "Test description")
     assert_difference("Service.count", -1) do
       delete service_path(service)
     end
     assert_redirected_to services_path
+    assert_equal "Service deleted successfully.", flash[:notice]
   end
 end
