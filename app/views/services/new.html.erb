@@ -1,2 +1,21 @@
-<h1>Services#new</h1>
-<p>Find me in app/views/services/new.html.erb</p>
+<h1>Add New Service</h1>
+
+<%= form_with model: @service, local: true do |f| %>
+  <div style="margin-bottom: 15px;">
+    <%= f.label :name, "Service Name" %>
+    <%= f.text_field :name, placeholder: "e.g. Renovation", style: "width: 100%; padding: 8px;" %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= f.label :description %>
+    <%= f.text_area :description, rows: 5, placeholder: "Brief description of the service...", style: "width: 100%; padding: 8px;" %>
+  </div>
+
+  <div>
+    <%= f.submit "Create Service", style: "padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer;" %>
+  </div>
+<% end %>
+
+<p style="margin-top: 20px;">
+  <%= link_to "← Back to Services", services_path, style: "color: #007bff;" %>
+</p>
