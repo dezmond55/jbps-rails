@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Specify Ruby version to match Heroku-24 stack
-ruby "3.3.9"
+ruby "3.4.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2", ">= 8.0.2.1"

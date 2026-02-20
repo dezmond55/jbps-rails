@@ -4,7 +4,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: postgres
   password: Trek5200 # Password updated after forgetting it multiple times :) 
-  host: localhost
+  host: 127.0.0.1
 
 development:
   <<: *default
