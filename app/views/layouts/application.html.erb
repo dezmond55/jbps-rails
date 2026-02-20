@@ -26,6 +26,13 @@
     <nav>
       <%= link_to "Home", root_path %>
       <%= link_to "About", about_path %>
+      <span style="float: right;">
+        <% if authenticated? %>
+          <%= button_to "Log out", session_path, method: :delete, style: "background: none; border: none; color: #333; cursor: pointer; font-size: 1em; padding: 0; text-decoration: none;" %>
+        <% else %>
+          <%= link_to "Admin", new_session_path %>
+        <% end %>
+      </span>
     </nav>
     <%= yield %>
   </body>

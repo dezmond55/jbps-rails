@@ -1,4 +1,7 @@
 class ServicesController < ApplicationController
+  allow_unauthenticated_access only: [ :index ]
+  before_action :require_authentication, only: [ :new, :create, :edit, :update, :destroy ]
+
   def index
     @services = Service.all
   end
