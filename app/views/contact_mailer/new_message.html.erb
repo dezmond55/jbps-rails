@@ -1,0 +1,15 @@
+<h2>New enquiry from jbps.com.au</h2>
+
+<p><strong>Name:</strong> <%= @name %></p>
+<p><strong>Email:</strong> <a href="mailto:<%= @email %>"><%= @email %></a></p>
+
+<hr>
+
+<p><strong>Message:</strong></p>
+<p><%= simple_format(@message) %></p>
+
+<hr>
+
+<p style="color: #999; font-size: 0.9em;">
+  This message was sent via the contact form at jbps.com.au
+</p>

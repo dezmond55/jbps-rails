@@ -25,3 +25,45 @@
     <p><strong>Contact:</strong> (08) 8762 1455 | admin@jbps.com.au</p>
   </div>
 </div>
+
+<!-- Contact Form -->
+<div id="contact" style="max-width: 700px; margin: 60px auto; padding: 0 20px;">
+  <h2 style="text-align: center; color: #333; margin-bottom: 10px;">Get in Touch</h2>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">
+    Send us a message and we'll get back to you promptly.
+  </p>
+
+  <% if flash[:notice] %>
+    <div style="background: #d4edda; color: #155724; padding: 14px 18px; border-radius: 6px; margin-bottom: 20px;">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div style="background: #f8d7da; color: #721c24; padding: 14px 18px; border-radius: 6px; margin-bottom: 20px;">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <%= form_with url: contact_path, method: :post do |f| %>
+    <div style="margin-bottom: 16px;">
+      <%= f.label :name, "Your Name", style: "display: block; font-weight: bold; margin-bottom: 6px; color: #333;" %>
+      <%= f.text_field :name, required: true, placeholder: "John Smith",
+          style: "width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; box-sizing: border-box;" %>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <%= f.label :email, "Your Email", style: "display: block; font-weight: bold; margin-bottom: 6px; color: #333;" %>
+      <%= f.email_field :email, required: true, placeholder: "john@example.com",
+          style: "width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; box-sizing: border-box;" %>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <%= f.label :message, "Message", style: "display: block; font-weight: bold; margin-bottom: 6px; color: #333;" %>
+      <%= f.text_area :message, required: true, rows: 5, placeholder: "Tell us about your project...",
+          style: "width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; box-sizing: border-box; resize: vertical;" %>
+    </div>
+
+    <%= f.submit "Send Message",
+        style: "background: #007bff; color: white; padding: 12px 32px; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; width: 100%;" %>
+  <% end %>
+</div>

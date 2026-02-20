@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   root "pages#home"
   get "about", to: "pages#about"
+  post "contact", to: "contacts#create"
 
   # Hide Services on live site until ready
   get "/services", to: redirect("/"), constraints: ->(req) { Rails.env.production? }
