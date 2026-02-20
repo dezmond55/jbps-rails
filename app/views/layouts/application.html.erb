@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Jbps" %></title>
+    <title><%= content_for(:title) || "JBPS - James Building & Property Services" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10,30 +10,77 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <nav>
-      <%= link_to "Home", root_path %>
-      <%= link_to "About", about_path %>
-      <span style="float: right;">
+    <nav class="navbar">
+      <%= link_to root_path, class: "navbar-brand" do %>
+        <%= image_tag "jbps-logo.png", alt: "JBPS James Building & Property Services" %>
+      <% end %>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="navbar-links" id="navbar-links">
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "About", about_path %></li>
+        <li><%= link_to "Contact", root_path(anchor: "contact"), class: "btn-nav" %></li>
         <% if authenticated? %>
-          <%= button_to "Log out", session_path, method: :delete, style: "background: none; border: none; color: #333; cursor: pointer; font-size: 1em; padding: 0; text-decoration: none;" %>
+          <li>
+            <%= button_to "Log out", session_path, method: :delete, class: "btn-logout" %>
+          </li>
         <% else %>
-          <%= link_to "Admin", new_session_path %>
+          <li><%= link_to "Admin", new_session_path %></li>
         <% end %>
-      </span>
+      </ul>
     </nav>
+
     <%= yield %>
+
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <%= image_tag "jbps-logo.png", alt: "JBPS" %>
+          <p>James Building &amp; Property Services &mdash; delivering commercial construction and maintenance across South Australia and Victoria.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="<%= root_path %>">Home</a></li>
+            <li><a href="<%= about_path %>">About</a></li>
+            <li><a href="<%= root_path(anchor: "contact") %>">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><span>(08) 8762 1455</span></li>
+            <li><a href="mailto:admin@jbps.com.au">admin@jbps.com.au</a></li>
+            <li><span>South Australia &amp; Victoria</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <%= Time.current.year %> James Building &amp; Property Services. All rights reserved.
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('hamburger').addEventListener('click', function() {
+        document.getElementById('navbar-links').classList.toggle('open');
+      });
+    </script>
   </body>
 </html>
