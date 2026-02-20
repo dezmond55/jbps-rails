@@ -1,15 +1,18 @@
-<!-- Hero -->
-<div class="hero">
-  <%= image_tag "jbps-hero.jpg", alt: "JBPS Construction Site", class: "hero-image" %>
-  <div class="hero-overlay">
-    <h1>Building Excellence<br>Across SA &amp; Victoria</h1>
-    <p>Commercial construction and property services delivered with our signature hands-on approach</p>
+<!-- Hero: Split layout -->
+<section class="hero-split">
+  <div class="hero-split-content">
+    <span class="hero-eyebrow">South Australia &amp; Victoria</span>
+    <h1>Building<br>Excellence</h1>
+    <p>Commercial construction and property services delivered with our signature hands-on approach — all trades under one roof.</p>
     <div class="hero-buttons">
       <%= link_to "Our Services", services_path, class: "btn-gold" %>
-      <%= link_to "Get in Touch", root_path(anchor: "contact"), class: "btn-outline" %>
+      <%= link_to "Get in Touch", root_path(anchor: "contact"), class: "btn-outline-navy" %>
     </div>
   </div>
-</div>
+  <div class="hero-split-image">
+    <%= image_tag "jbps-hero.jpg", alt: "JBPS Construction Site" %>
+  </div>
+</section>
 
 <!-- Stats Strip -->
 <div class="stat-strip">
@@ -31,7 +34,7 @@
   </div>
 </div>
 
-<!-- About Strip -->
+<!-- About -->
 <section class="section section-white">
   <div class="container text-center">
     <h2 class="section-title">Comprehensive Construction &amp; Property Services</h2>
