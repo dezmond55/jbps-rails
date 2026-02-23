@@ -1,6 +1,10 @@
 require "test_helper"
 
 class ServicesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    post session_path, params: { email_address: users(:one).email_address, password: "password" }
+  end
+
   test "should get index" do
     get services_path
     assert_response :success

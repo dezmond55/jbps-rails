@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   get "/services/*path", to: redirect("/"), constraints: ->(req) { Rails.env.production? }
 
   resources :services
-  resources :enquiries, only: [:create]
+  resources :enquiries, only: [ :create ]
 end
