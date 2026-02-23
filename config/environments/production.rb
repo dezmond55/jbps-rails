@@ -59,15 +59,15 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "jbps.com.au" }
 
-  # SMTP delivery via environment variables set on Heroku.
-  # Run: heroku config:set SMTP_ADDRESS=... SMTP_USERNAME=... SMTP_PASSWORD=...
+  # Resend SMTP — set on Heroku with:
+  # heroku config:set RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
-    port: ENV.fetch("SMTP_PORT", 587).to_i,
+    address: "smtp.resend.com",
+    port: 587,
     domain: "jbps.com.au",
-    user_name: ENV["SMTP_USERNAME"],
-    password: ENV["SMTP_PASSWORD"],
+    user_name: "resend",
+    password: ENV["RESEND_API_KEY"],
     authentication: :plain,
     enable_starttls_auto: true
   }

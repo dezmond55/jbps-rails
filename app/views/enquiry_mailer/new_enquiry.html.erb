@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>New Enquiry — JBPS</title>
+</head>
+<body style="margin:0; padding:0; background:#f5f2eb; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f2eb; padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:#0A1A30; padding:32px 40px;">
+              <p style="margin:0; font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#C49A2C; font-weight:400;">James Building &amp; Property Services</p>
+              <h1 style="margin:8px 0 0; font-size:22px; color:#ffffff; font-weight:600; letter-spacing:-0.3px;">New Project Enquiry</h1>
+            </td>
+          </tr>
+
+          <!-- Submitted at -->
+          <tr>
+            <td style="background:#132844; padding:12px 40px;">
+              <p style="margin:0; font-size:12px; color:rgba(255,255,255,0.5); letter-spacing:0.3px;">
+                Submitted: <%= @enquiry.created_at.in_time_zone('Adelaide').strftime('%A %-d %B %Y at %-I:%M %p ACST') rescue @enquiry.created_at.strftime('%d %b %Y %H:%M UTC') %>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Primary contact details -->
+          <tr>
+            <td style="padding:36px 40px 20px;">
+              <h2 style="margin:0 0 20px; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#C49A2C; font-weight:600; border-bottom:2px solid #C49A2C; padding-bottom:10px;">Contact Details</h2>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:8px 0; width:140px; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Name</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30; font-weight:600;"><%= @enquiry.name %></td>
+                </tr>
+                <% if @enquiry.company.present? %>
+                <tr>
+                  <td style="padding:8px 0; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Company</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><%= @enquiry.company %></td>
+                </tr>
+                <% end %>
+                <tr>
+                  <td style="padding:8px 0; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Email</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><a href="mailto:<%= @enquiry.email %>" style="color:#C49A2C; text-decoration:none;"><%= @enquiry.email %></a></td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 0; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Phone</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><a href="tel:<%= @enquiry.phone %>" style="color:#C49A2C; text-decoration:none;"><%= @enquiry.phone %></a></td>
+                </tr>
+                <% if @enquiry.location.present? %>
+                <tr>
+                  <td style="padding:8px 0; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Location</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><%= @enquiry.location %></td>
+                </tr>
+                <% end %>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Project details -->
+          <tr>
+            <td style="padding:0 40px 20px;">
+              <h2 style="margin:0 0 20px; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#C49A2C; font-weight:600; border-bottom:2px solid #C49A2C; padding-bottom:10px;">Project Details</h2>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <% if @enquiry.services.present? && @enquiry.services.any? %>
+                <tr>
+                  <td style="padding:8px 0; width:140px; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Services</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><%= @enquiry.services.reject(&:blank?).join(', ') %></td>
+                </tr>
+                <% end %>
+                <% if @enquiry.budget.present? %>
+                <tr>
+                  <td style="padding:8px 0; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Budget</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><%= @enquiry.budget %></td>
+                </tr>
+                <% end %>
+                <% if @enquiry.timeline.present? %>
+                <tr>
+                  <td style="padding:8px 0; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Timeline</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><%= @enquiry.timeline %></td>
+                </tr>
+                <% end %>
+                <% if @enquiry.source.present? %>
+                <tr>
+                  <td style="padding:8px 0; font-size:12px; color:#7A808A; font-weight:500; text-transform:uppercase; letter-spacing:0.5px; vertical-align:top;">Found us via</td>
+                  <td style="padding:8px 0; font-size:15px; color:#0A1A30;"><%= @enquiry.source %></td>
+                </tr>
+                <% end %>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Description -->
+          <% if @enquiry.description.present? %>
+          <tr>
+            <td style="padding:0 40px 36px;">
+              <h2 style="margin:0 0 16px; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#C49A2C; font-weight:600; border-bottom:2px solid #C49A2C; padding-bottom:10px;">Project Description</h2>
+              <p style="margin:0; font-size:15px; color:#3A3F47; line-height:1.8; white-space:pre-wrap;"><%= @enquiry.description %></p>
+            </td>
+          </tr>
+          <% end %>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f5f2eb; padding:24px 40px; border-top:1px solid #ebe7dd;">
+              <p style="margin:0; font-size:12px; color:#7A808A; line-height:1.6;">
+                This enquiry was submitted via <strong>jbps.com.au</strong> and saved to the database.
+                Reply directly to <a href="mailto:<%= @enquiry.email %>" style="color:#C49A2C;"><%= @enquiry.email %></a> to respond.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

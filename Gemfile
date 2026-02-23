@@ -59,6 +59,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  # Load .env variables in development
+  gem "dotenv-rails"
   # Remove if not using Capistrano with Heroku (uncommon)
   # gem "capistrano-rails", require: false
 end
@@ -70,3 +72,4 @@ group :test do
 end
 
 gem "bcrypt", "~> 3.1"
+gem "resend"

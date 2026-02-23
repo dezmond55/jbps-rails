@@ -15,72 +15,153 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <nav class="navbar">
-      <%= link_to root_path, class: "navbar-brand" do %>
-        <%= image_tag "jbps-logo.png", alt: "JBPS James Building & Property Services" %>
-      <% end %>
-
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <ul class="navbar-links" id="navbar-links">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "About", about_path %></li>
-        <li><%= link_to "Contact", root_path(anchor: "contact"), class: "btn-nav" %></li>
-        <% if authenticated? %>
-          <li>
-            <%= button_to "Log out", session_path, method: :delete, class: "btn-logout" %>
-          </li>
-        <% else %>
-          <li><%= link_to "Admin", new_session_path %></li>
-        <% end %>
-      </ul>
+    <div class="grain"></div>
+    <nav class="nav" id="nav">
+      <a href="<%= root_path %>" class="nav-logo">
+        <div>
+          <div class="nav-wordmark">JAMES</div>
+          <div class="nav-descriptor">Building &amp; Property Services</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="<%= root_path %>#services" class="nav-link">Services</a>
+        <a href="<%= about_path %>" class="nav-link">About</a>
+        <a href="<%= root_path %>#regions" class="nav-link">Regions</a>
+        <a href="<%= root_path %>#quote" class="nav-link">Contact</a>
+        <a href="<%= root_path %>#quote" class="nav-cta">Contact Us</a>
+      </div>
     </nav>
 
     <%= yield %>
 
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <%= image_tag "jbps-logo.png", alt: "JBPS" %>
-          <p>James Building &amp; Property Services &mdash; delivering commercial construction and maintenance across South Australia and Victoria.</p>
+    <footer class="footer">
+      <div class="footer-main">
+        <div>
+          <div class="footer-brand-mark">JAMES</div>
+          <div class="footer-brand-desc">Commercial construction, facilities management, and property services across South Australia and Victoria. From the Limestone Coast to Adelaide and Western Victoria.</div>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="<%= root_path %>">Home</a></li>
-            <li><a href="<%= about_path %>">About</a></li>
-            <li><a href="<%= root_path(anchor: "contact") %>">Contact</a></li>
-          </ul>
+          <h4>Services</h4>
+          <a href="/#services">Commercial Construction</a>
+          <a href="/#services">Facilities Management</a>
+          <a href="/#services">Renovations &amp; Upgrades</a>
+          <a href="/#quote">Contact Us</a>
         </div>
         <div class="footer-col">
-          <h4>Contact Us</h4>
-          <ul>
-            <li><span>(08) 8762 1455</span></li>
-            <li><a href="mailto:admin@jbps.com.au">admin@jbps.com.au</a></li>
-            <li><span>South Australia &amp; Victoria</span></li>
-          </ul>
+          <h4>Company</h4>
+          <%= link_to "About JBPS", about_path %>
+          <a href="/#regions">Service Regions</a>
+          <a href="/#quote">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>
+            <a href="tel:0887621455">(08) 8762 1455</a><br>
+            <a href="mailto:admin@jbps.com.au">admin@jbps.com.au</a><br><br>
+            88 Gordon Street<br>
+            Naracoorte SA 5271
+          </p>
         </div>
       </div>
-      <div class="footer-bottom">
-        &copy; <%= Time.current.year %> James Building &amp; Property Services. All rights reserved.
+      <div class="footer-bar">
+        <div class="footer-legal">&copy; <%= Time.current.year %> James Building &amp; Property Services Pty Ltd. All rights reserved.</div>
+        <div class="footer-badges">SA BLD 252235 &nbsp;&middot;&nbsp; VIC CB-U 65290</div>
       </div>
     </footer>
 
-    <script>
-      document.getElementById('hamburger').addEventListener('click', function() {
-        document.getElementById('navbar-links').classList.toggle('open');
+  <script>
+    (function () {
+      /* === NAV SCROLL (set up once) === */
+      var nav = document.getElementById('nav');
+      if (nav) {
+        window.addEventListener('scroll', function () {
+          nav.classList.toggle('scrolled', window.scrollY > 80);
+        }, { passive: true });
+      }
+
+      /* === SERVICE STRIP ACCORDION (event delegation — Turbo-safe) === */
+      document.addEventListener('click', function (e) {
+        var header = e.target.closest('.service-strip-header');
+        if (!header) return;
+        var strip = header.closest('.service-strip');
+        if (!strip) return;
+        var wasActive = strip.classList.contains('active');
+        document.querySelectorAll('.service-strip').forEach(function (s) { s.classList.remove('active'); });
+        if (!wasActive) strip.classList.add('active');
       });
-    </script>
+
+      /* === SMOOTH SCROLL (event delegation — Turbo-safe) === */
+      document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+        var target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+      /* === FORM SUCCESS (redirect-based) === */
+      function checkFormSuccess() {
+        if (new URLSearchParams(window.location.search).get('sent') !== '1') return;
+        var fields = document.getElementById('formFields');
+        var successEl = document.getElementById('formSuccess');
+        if (fields) fields.style.display = 'none';
+        if (successEl) successEl.classList.add('show');
+        history.replaceState(null, '', window.location.pathname + '#quote');
+      }
+      checkFormSuccess();
+      document.addEventListener('turbo:load', checkFormSuccess);
+
+      /* === BOOT — runs on initial load AND after each Turbo navigation === */
+      var revealObserver, counterObserver;
+
+      function boot() {
+        /* Scroll reveal */
+        if (revealObserver) revealObserver.disconnect();
+        revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) entry.target.classList.add('vis');
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          revealObserver.observe(el);
+        });
+
+        /* Animated counter */
+        if (counterObserver) counterObserver.disconnect();
+        counterObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var el = entry.target;
+            var target = parseInt(el.dataset.count, 10);
+            var suffix = el.dataset.suffix || '';
+            if (!target) return;
+            var current = 0;
+            var step = Math.ceil(target / 40);
+            var timer = setInterval(function () {
+              current += step;
+              if (current >= target) { current = target; clearInterval(timer); }
+              el.textContent = current + suffix;
+            }, 30);
+            counterObserver.unobserve(el);
+          });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('[data-count]').forEach(function (el) {
+          counterObserver.observe(el);
+        });
+      }
+
+      boot();
+      document.addEventListener('turbo:load', boot);
+    })();
+  </script>
   </body>
 </html>
