@@ -363,6 +363,9 @@
       <div class="quote-form" id="quoteForm">
         <div id="formFields">
           <%= form_with url: enquiries_path, scope: :enquiry, id: "enquiryForm" do |f| %>
+            <div class="hp-field">
+              <%= f.text_field :website, autocomplete: "off", tabindex: -1, aria: { hidden: "true" } %>
+            </div>
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Your Name *</label>

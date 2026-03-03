@@ -1027,6 +1027,7 @@ img { max-width: 100%; }
 
 .form-row.full { grid-template-columns: 1fr; }
 .form-group { display: flex; flex-direction: column; }
+.hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; pointer-events: none; }
 
 .form-label {
   font-family: 'Outfit', sans-serif;

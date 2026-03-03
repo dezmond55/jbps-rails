@@ -2,6 +2,8 @@ class EnquiriesController < ApplicationController
   allow_unauthenticated_access
 
   def create
+    return redirect_to root_path(sent: 1), status: :see_other if params.dig(:enquiry, :website).present?
+
     @enquiry = Enquiry.new(enquiry_params)
     if @enquiry.save
       EnquiryMailer.new_enquiry(@enquiry).deliver_later
