@@ -365,6 +365,7 @@
           <%= form_with url: enquiries_path, scope: :enquiry, id: "enquiryForm" do |f| %>
             <div class="hp-field">
               <%= f.text_field :website, autocomplete: "off", tabindex: -1, aria: { hidden: "true" } %>
+              <%= f.hidden_field :form_started_at, value: Time.current.to_i %>
             </div>
             <div class="form-row">
               <div class="form-group">

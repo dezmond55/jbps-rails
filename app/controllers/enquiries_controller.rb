@@ -3,6 +3,7 @@ class EnquiriesController < ApplicationController
 
   def create
     return redirect_to root_path(sent: 1), status: :see_other if params.dig(:enquiry, :website).present?
+    return redirect_to root_path(sent: 1), status: :see_other if submitted_too_fast?
 
     @enquiry = Enquiry.new(enquiry_params)
     if @enquiry.save
@@ -14,6 +15,11 @@ class EnquiriesController < ApplicationController
   end
 
   private
+
+  def submitted_too_fast?
+    started_at = params.dig(:enquiry, :form_started_at).to_i
+    started_at > 0 && (Time.current.to_i - started_at) < 4
+  end
 
   def enquiry_params
     params.require(:enquiry).permit(
