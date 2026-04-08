@@ -39,7 +39,7 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '18'
       - name: Scan for security vulnerabilities in JavaScript dependencies
