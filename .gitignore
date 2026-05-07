@@ -37,3 +37,6 @@ config/master.key
 vendor/javascript/
 vendor/.keep
 vendor/javascript/.keep
+
+# Ignore Claude Code local session state.
+.claude/
