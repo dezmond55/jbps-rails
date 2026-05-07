@@ -4,7 +4,7 @@ _Last updated: 2026-05-07_
 
 ## Current focus
 
-Documentation foundation complete — `CLAUDE.md`, the `/docs` structure, and ADR 0001 (multi-tenancy from day one) are all committed. Next concrete artefact in this repo is `/docs/specs/01-project-management.md`, blocked on the Q382 Excel Gantt being produced in the Production Claude session.
+Documentation foundation complete — `CLAUDE.md`, the `/docs` structure, and ADR 0001 (multi-tenancy from day one) are all committed. Next concrete artefact in this repo is `/docs/specs/01-project-management.md`, blocked on the Q382 Excel Gantt being produced in the Production Claude session. CI on `main` is green after fixing one trailing-newline rubocop offence in `test/models/enquiry_test.rb`.
 
 ## In flight
 
@@ -23,3 +23,4 @@ Module 1 spec is waiting on the Q382 Excel Gantt. That Gantt is the functional s
 - Six unreferenced JS files in `app/javascript/` (`counter.js`, `enquiry_form.js`, `nav.js`, `reveal.js`, `services.js`, `smooth_scroll.js`) — investigated this session, see `docs/status-js-cleanup.md`. Deletion deferred to a future session.
 - Layout inline JS (~90 lines in `app/views/layouts/application.html.erb`, lines 79–165) should be ported to Stimulus controllers before Module 2 begins. Use that as the Stimulus learning ramp before the platform's mobile UI work depends on it.
 - The repo lives in OneDrive (`C:\Users\borbu\OneDrive\Documents\jbps\jbps-rails`). OneDrive Files On-Demand has caused at least one observable problem (`findstr` recursion failed on reparse points). Evaluate relocating to `C:\dev\jbps-rails` before Module 1 code work begins.
+- CI feedback wasn't being checked between sessions — established that lint job runs on every push, watch the GitHub Actions output as part of session close.
