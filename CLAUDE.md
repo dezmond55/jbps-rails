@@ -8,7 +8,7 @@ The JBPS Digital Platform — a Rails 8 application initially deployed at https:
 
 ## Tech stack
 
-- Rails 8.0.2.1 / Ruby 3.3.9
+- Rails 8.0.2.1 / Ruby 3.4.5
 - Hotwire (Turbo + Stimulus via ImportMap)
 - Propshaft, PostgreSQL
 - Deployed to Heroku
@@ -66,12 +66,12 @@ Default to interactive sessions. Use `claude -p` (headless) only for grunt work 
 
 ## Multi-machine workflow
 
-Derek works across three Windows machines. OneDrive syncs files but **git is the source of truth**.
+Derek works across three Windows machines. Each has its own local clone (typically under `C:\dev\`); **git is the source of truth, not the filesystem**.
 
 - `git pull` at the start of every session
 - `git push` at the end of every session, even mid-feature (use a WIP commit if needed)
 - Update `/docs/status.md` before pushing if a session ends mid-task
-- Never rely on OneDrive for in-flight Rails work — sync conflicts are painful
+- The local working tree is scratch space — anything not pushed is invisible to the next machine
 
 ## Handoff artefacts
 
