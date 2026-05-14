@@ -1,12 +1,12 @@
 # Status
 
-_Last updated: 2026-05-13_
+_Last updated: 2026-05-14_
 
 ## Current focus
 
-Repo relocated this session from `C:\Users\borbu\OneDrive\Documents\jbps\jbps-rails` to `C:\dev\jbps-rails`. Old location archived as `jbps-rails-ARCHIVED-2026-05-13` in the OneDrive parent folder. Git remains the source of truth across machines.
+User auth audit complete — see `docs/notes/user-auth-audit.md`. Finding: auth is stock `bin/rails generate authentication` output, wired into `ApplicationController`, fully functional (login, logout, password reset, IP rate limiting). Self-signup, roles, email confirmation, and tests are absent. **Critical gap:** `User` has no `organisation_id`, which conflicts with the CLAUDE.md non-negotiable that every User belongs to an Organisation. The auth generator ran before that rule was committed.
 
-Module 1 Pass 1 spec landed. Build sequence for Module 1 is now: (1) User authentication, (2) Organisation model and multi-tenancy plumbing per ADR 0001, (3) Module 1 Pass 2 (data model in field-level detail), then later passes for operations and acceptance tests.
+Build sequence for Module 1 is now: (1) User authentication — done as scaffold, no further work scheduled, (2) Multi-tenancy foundation (Organisation model, `Current.organisation`, `Tenanted` concern, backfill User with `organisation_id`), (3) Module 1 Pass 2 (data model in field-level detail), then later passes for operations and acceptance tests.
 
 ## In flight
 
@@ -18,9 +18,7 @@ Nothing.
 
 ## Next
 
-First move in the next strategic session: audit what's actually in the existing User/auth setup. Migrations `20260218133054_create_users.rb` and `20260218133102_create_sessions.rb` already exist on disk — the Pass 1 spec lists auth as a prerequisite to be built, but it may already be done. Update Module 1 prerequisite status accordingly before scheduling further auth work.
-
-Then: Module 1 Pass 2 — data model in field-level detail. To happen in a future session in the strategy Project (not Claude Code), once Derek is fresh. Any remaining prerequisite Organisation work follows.
+Spec the multi-tenancy foundation at `/docs/specs/00-multi-tenancy-foundation.md` before any Module 1 Pass 2 work. Then build the foundation, then Pass 2.
 
 ## Known debt
 
