@@ -1,12 +1,10 @@
 # Status
 
-_Last updated: 2026-05-14_
+_Last updated: 2026-05-15_
 
 ## Current focus
 
-User auth audit complete — see `docs/notes/user-auth-audit.md`. Finding: auth is stock `bin/rails generate authentication` output, wired into `ApplicationController`, fully functional (login, logout, password reset, IP rate limiting). Self-signup, roles, email confirmation, and tests are absent. **Critical gap:** `User` has no `organisation_id`, which conflicts with the CLAUDE.md non-negotiable that every User belongs to an Organisation. The auth generator ran before that rule was committed.
-
-Build sequence for Module 1 is now: (1) User authentication — done as scaffold, no further work scheduled, (2) Multi-tenancy foundation (Organisation model, `Current.organisation`, `Tenanted` concern, backfill User with `organisation_id`), (3) Module 1 Pass 2 (data model in field-level detail), then later passes for operations and acceptance tests.
+Multi-tenancy foundation spec (Spec 00) landed at `/docs/specs/00-multi-tenancy-foundation.md`. This is the prerequisite work for Module 1 Pass 2. Next move is to execute the foundation work in a fresh Claude Code session.
 
 ## In flight
 
@@ -18,7 +16,7 @@ Nothing.
 
 ## Next
 
-Spec the multi-tenancy foundation at `/docs/specs/00-multi-tenancy-foundation.md` before any Module 1 Pass 2 work. Then build the foundation, then Pass 2.
+Build the multi-tenancy foundation per Spec 00 — Organisation model, user linkage, Tenanted concern, three tests. Then Module 1 Pass 2 (data model in field-level detail).
 
 ## Known debt
 
